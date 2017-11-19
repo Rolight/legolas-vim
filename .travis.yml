@@ -7,9 +7,7 @@ os:
   - osx
 
 before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo add-apt-repository --yes ppa:kalakris/cmake && sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo add-apt-repository --yes ppa:bcandrea/backports; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update -qq; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
 
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y clang golang; fi
@@ -20,7 +18,8 @@ addons:
     sources:
      # The Travis apt source whitelist can be found here:
      #   https://github.com/travis-ci/apt-source-whitelist/blob/master/ubuntu.json
-     - ubuntu-toolchain-r-test  # for new libstdc++
+     - george-edison55-precise-backports
+     - ubuntu-toolchain-r-test
      - george-edison55-precise-backports # for a more recent version of cmake (3.2.3)
     packages:
      - cmake-data
@@ -43,6 +42,7 @@ addons:
      - libncursesw5-dev
 
 compiler:
+  - clang
   - gcc
 
 script:
